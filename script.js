@@ -50,3 +50,75 @@ const photos = [
 ];
 
 console.log('test commit');
+
+let numberOfPhotosShown = 6;
+const galleryElement = document.getElementById('gallery');
+const buttons = document.querySelectorAll('.filter-buttons button');
+console.log(buttons);
+
+const loadMoreButton = document.querySelector('#load-more');
+
+// create and appending photoes elements to #gallery container
+photos.forEach(function (photo) {
+    const photoElement = document.createElement('img');
+    photoElement.classList.add('photo');
+    photoElement.src = photo.url;
+    photoElement.setAttribute('data-type', photo.type);
+    photoElement.style.display = 'none';
+
+    galleryElement.appendChild(photoElement);
+});
+
+showPhotos(numberOfPhotosShown);
+//const photoElements = document.querySelectorAll('.photo');
+//for{let i=0; i < 6; i++} {
+//  photoElements[i].style.display = 'block';
+ // }
+    
+// add click event listener to each button
+for (let i = 0; i < buttons.length; i++) {
+    buttons[i].addEventListener('click', function () {
+        const filter = this.getAttribute('data-filter');
+        filterPhotos(filter);
+    });
+}
+
+// hide loadMore button If no more photos to show
+if (numberOfPhotosShown >= photoElements.length) {
+    loadMoreButton.style.display = 'none';
+} else {
+    loadMoreButton.style.display = 'block';
+}
+
+function filterPhotos(filter) {
+    const photoElements = document.querySelectorAll('.photo');
+    photoElements.forEach(function (photo) {
+        if (filter === 'all' || photo.getAttribute('data-type') === filter) {
+            photo.style.display = 'block';
+        } else {
+            photo.style.display = 'none';
+        }
+    });
+}
+
+function showPhotos(numOfPhotosShown) {
+const photoElements = document.querySelectorAll('.photo');
+for (let i = 0; i < numOfPhotosShown; i++) {
+    if (photoElements[i]) {
+    photoElements[i].style.display = 'block';
+    }
+}
+}
+
+loadMoreButton.addEventListener('click', () => {
+    console.log('show 6 more photos');
+    numberOfPhotosShown += 6;
+    console.log('number of photos shown:', numberOfPhotosShown);
+    showPhotos(numberOfPhotosShown);
+});
+
+if (numberOfPhotosShown >= photoElements.length) {
+    loadMoreButton.style.display = 'none';
+} else {
+    loadMoreButton.style.display = 'block';
+}
